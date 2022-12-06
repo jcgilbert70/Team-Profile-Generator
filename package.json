@@ -1,0 +1,17 @@
+{
+    "name": "01-stu_tdd-dissect",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "express": "^4.18.2",
+        "inquirer": "^8.2.4",
+        "jest": "^24.8.0",
+        "node-fetch": "^2.6.6"
+    }
+}
