@@ -13,7 +13,7 @@ describe("Intern Test", () => {
         it("Can get 'new' role of Intern", () => {
             const testNewRole = "Intern";
             const test = new Intern("Jeff", 5, "testEmail@test.com", "jeffGithub");
-            expect(test.getRole()).tobe(testNewRole);
+            expect(test.getRole()).toBe(testNewRole);
         });
     });
 });

@@ -13,7 +13,7 @@ describe("Manager Test", () => {
         it("Can get 'new' role of Manager", () => {
             const testNewRole = "Manager";
             const test = new Manager("Jeff", 5, "testEmail@test.com", "jeffGithub");
-            expect(test.getRole()).tobe(testNewRole);
+            expect(test.getRole()).toBe(testNewRole);
         });
     });
 });
