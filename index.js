@@ -1,36 +1,46 @@
 const inquirer = require('inquirer');
+const path = require('path');
 const fs = require('fs');
+
 const Engineer = require("./lib/engineer")
 const Intern = require("./lib/intern")
 const Manager = require("./lib/manager")
 
-const teamArr = [];
+const renderHTML = require('./src/HTML/generateMarkDown');
+const renderCSS = require('./src/CSS/generateCSS');
+
+const DIST_DIR = path.resolve(__dirname, 'dist');
+const outputHTML = path.join(DIST_DIR, 'index.html');
+const outputCSS = path.join(DIST_DIR, 'style.css');
+
+
+const newTeamArr = [];
 
 const managerCreation = [
 
     // team manager’s name, employee ID, email address, and office number
     {
         type: 'input',
-        name: 'managerName',
-        message: "What is the Team Manager's name?",
+        name: 'nameOfManager',
+        message: "Enter the Team Manager's name",
     },
 
     {
         type: 'input',
-        name: 'managerId',
-        message: "What is the Team Manager's employee ID #?",
+        name: 'idOfManager',
+        message: "Enter the Team Manager's employee ID #",
     },
 
     {
         type: 'input',
-        name: 'managerEmail',
-        message: "What is the Team Manager's email?",
+        name: 'emailOfManager',
+        message: "Enter the Team Manager's email",
     },
 
     {
         type: 'input',
-        name: 'managerOfficeNumber',
-        message: "What is the Team Manager's office number?",
+        name: 'officeNumberOfManager',
+        message: "Enter the Team Manager's office number",
     },
 ];
 
@@ -38,10 +48,10 @@ const newTeamMemberCreation = [
 
     // team manager’s name, employee ID, email address, and office number
     {
-        type: 'input',
-        name: 'newRole',
-        message: "What is the role of this new team member?",
-        coices: ['Engineer', 'Inter', 'Finished building team'],
+        type: 'list',
+        name: 'role',
+        message: "Select the role of this new team member",
+        coices: ['Engineer', 'Intern', 'Finished building team'],
     },
 ];
 
@@ -98,26 +108,6 @@ const newInternCreation = [
 ];
 
 
-function addEngineer() {
-    inquirer
-        .prompt(newEngineerCreation)
-        .then(data => {
-            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-            teamArr.push(engineer);
-            addNewMember();
-        })
-}
-
-
-function addIntern() {
-    inquirer
-    .prompt(newInternCreation)
-    .then(data => {
-        const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
-        teamArr.push(intern);
-        addNewMember();
-    })
-}
 
 
 function init() {
@@ -135,8 +125,8 @@ function init() {
     inquirer
         .prompt(managerCreation)
         .then(data => {
-            const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber);
-            teamArr.push(manager);
+            const manager = new Manager(data.nameOfManager, data.idOfManager, data.emailOfManager, data.officeNumberOfManager);
+            newTeamArr.push(manager);
             addNewMember();
         })
 
@@ -146,7 +136,7 @@ function addNewMember() {
     inquirer
         .prompt(newTeamMemberCreation)
         .then(selection => {
-            switch (selection.newRole) {
+            switch (selection.role) {
                 case 'Engineer':
                     addEngineer();
                     break;
@@ -160,12 +150,33 @@ function addNewMember() {
         })
 }
 
+function addEngineer() {
+    inquirer
+        .prompt(newEngineerCreation)
+        .then(data => {
+            const newEngineer = new Engineer(data.nameOfEngineer, data.idOfEngineer, data.emailOfEngineer, data.githubOfEngineer);
+            newTeamArr.push(newEngineer);
+            addNewMember();
+        })
+}
+
+
+function addIntern() {
+    inquirer
+    .prompt(newInternCreation)
+    .then(data => {
+        const newIntern = new Intern(data.nameOfIntern, data.idOfIntern, data.emailOfIntern, data.schoolOfIntern);
+        newTeamArr.push(newIntern);
+        addNewMember();
+    })
+}
+
 function generateHTML() {
-    fs.writeFileSync(outputPathHTML, renderFilesHTML(teamArr), 'utf-8')
+    fs.writeFileSync(outputHTML, renderHTML(newTeamArr), 'utf-8')
 }
 
 function generateCSS() {
-    fs.writeFileSync(outputPathCSS, renderFilesCSS())
+    fs.writeFileSync(outputCSS, renderCSS())
 }
 
 init();
