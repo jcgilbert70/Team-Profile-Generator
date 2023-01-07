@@ -80,9 +80,9 @@ THEN I exit the application, and the HTML is generated
 
   ## Screenshot
 
-  <img src="./assets/img/tests.PNG" width="300">
+  <img src="./assets/img/tests.PNG" width="450">
 
-  <img src="./assets/img/newTeam.PNG" width="300">
+  <img src="./assets/img/newTeam.PNG" width="450">
 
   ## Links
 
