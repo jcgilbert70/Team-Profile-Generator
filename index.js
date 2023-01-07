@@ -9,7 +9,7 @@ const Manager = require("./lib/manager")
 const renderHTML = require('./src/HTML/generateMarkDown');
 const renderCSS = require('./src/CSS/generateCSS');
 
-const DIST_DIR = path.resolve(__dirname, 'dist');
+const DIST_DIR = path.resolve(__dirname, 'output');
 const outputHTML = path.join(DIST_DIR, 'index.html');
 const outputCSS = path.join(DIST_DIR, 'style.css');
 
@@ -46,12 +46,11 @@ const managerCreation = [
 
 const newTeamMemberCreation = [
 
-    // team manager’s name, employee ID, email address, and office number
     {
         type: 'list',
         name: 'role',
         message: "Select the role of this new team member",
-        coices: ['Engineer', 'Intern', 'Finished building team'],
+        choices: ['Engineer', 'Intern', 'Finished building team'],
     },
 ];
 
@@ -108,10 +107,8 @@ const newInternCreation = [
 ];
 
 
-
-
 function init() {
-    console.log`
+    console.log(`
     Let's create your team,
     
     You will be prompted to create a Team Manager
@@ -120,13 +117,15 @@ function init() {
     and your team with all corresponding information will be
     created.
     
-    Thank you`
+    Thank you
+    `)
 
     inquirer
         .prompt(managerCreation)
         .then(data => {
             const manager = new Manager(data.nameOfManager, data.idOfManager, data.emailOfManager, data.officeNumberOfManager);
             newTeamArr.push(manager);
+            console.log("Manager for new team added");
             addNewMember();
         })
 
@@ -156,6 +155,7 @@ function addEngineer() {
         .then(data => {
             const newEngineer = new Engineer(data.nameOfEngineer, data.idOfEngineer, data.emailOfEngineer, data.githubOfEngineer);
             newTeamArr.push(newEngineer);
+            console.log("Engineer added to team");
             addNewMember();
         })
 }
@@ -167,11 +167,13 @@ function addIntern() {
     .then(data => {
         const newIntern = new Intern(data.nameOfIntern, data.idOfIntern, data.emailOfIntern, data.schoolOfIntern);
         newTeamArr.push(newIntern);
+        console.log("Intern added to team");
         addNewMember();
     })
 }
 
 function generateHTML() {
+    console.log("write html");
     fs.writeFileSync(outputHTML, renderHTML(newTeamArr), 'utf-8')
 }
 

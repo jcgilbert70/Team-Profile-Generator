@@ -7,11 +7,13 @@ module.exports = newTeam => {
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="style.css">
-            <title>Team</title>
+            <title>New Team</title>
         </head>
         <body>
             <header>
+                <img id="headerIcon" src="../assets/img/Team.PNG">
                 <h1>Team</h1>
+
             </header>
             <main>
                 ${generateTeam(newTeam)}
@@ -25,31 +27,13 @@ module.exports = newTeam => {
 };
 const generateTeam = myTeam => {
 
-    const generateEmployee = employee => {
-        return `
-        <div id="employee-card">
-            <div id="card-header">
-                <h2 id="employee-name">${employee.getName()}</h2>
-                <div id="employee-role">
-                    <img id="image" src="../assets/notebook-icon.png" alt="notebook icon">
-                    <h3 id="role">Employee</h3>
-                </div>
-            </div>
-            <div id="card-info">
-                <p><strong>ID:</strong> ${employee.getId()}</p>
-                <p><strong>Email:</strong> <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></p>
-            </div>
-        </div>
-        `;
-    };
-
     const generateManager = manager => {
         return `
     <div id="employee-card">
         <div id="card-header">
             <h2 id="employee-name">${manager.getName()}</h2>
             <div id="employee-role">
-                <img id="image" src="../assets/coffee-icon.png" alt="coffee icon">
+                <img id="icon" src="../assets/img/Manager.png">
                 <h3 id="role">Manager</h3>
             </div>
         </div>
@@ -68,14 +52,14 @@ const generateTeam = myTeam => {
         <div id="card-header">
             <h2 id="employee-name">${engineer.getName()}</h2>
             <div id="employee-role">
-                <img id="image" src="../assets/glasses-icon.png" alt="glasses icon">
+            <img id="icon" src="../assets/img/Engineer.png">
                 <h3 id="role">Engineer</h3>
             </div>
         </div>
         <div id="card-info">
             <p><strong>ID:</strong> ${engineer.getId()}</p>
             <p><strong>Email:</strong> <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a><p>
+            <p><strong>GitHub Link:</strong> <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></p>
         </div>
     </div>
     `;
@@ -87,7 +71,7 @@ const generateTeam = myTeam => {
         <div id="card-header">
             <h2 id="employee-name">${intern.getName()}</h2>
             <div id="employee-role">
-                <img id="image" src="../assets/student-icon.png" alt="student icon">
+            <img id="icon" src="../assets/img/Intern.png">
                 <h3 id="role">Intern</h3>
             </div>
         </div>
@@ -102,10 +86,6 @@ const generateTeam = myTeam => {
 
     const htmlContent = [];
 
-    htmlContent.push(myTeam
-        .filter(employee => employee.getRole() === 'Employee')
-        .map(employee => generateEmployee(employee))
-    );
     htmlContent.push(myTeam
         .filter(employee => employee.getRole() === 'Manager')
         .map(manager => generateManager(manager))
